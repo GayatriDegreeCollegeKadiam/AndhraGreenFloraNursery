@@ -31,8 +31,8 @@ const leafIcon = (size = 18, color = "currentColor") =>
   iconSvg("M11 20A7 7 0 0 1 4 13c0-5 4-9 9-9 5 0 8 3 8 8a7 7 0 0 1-7 7c-1.5 0-3-.5-4-1.5M4 13c4 0 8-4 9-9", { size, color });
 
 /* ---------- brand logo: potted sapling with a marigold bud (growth, care) ---------- */
-function nurseryLogoSvg(size = 44) {
-  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+function nurseryLogoSvg() {
+  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
     <circle cx="50" cy="50" r="48" fill="#FBF7EE" stroke="#7DAE5C" stroke-width="2"/>
     <path d="M30,72 L70,72 L64,90 L36,90 Z" fill="#A8502E"/>
     <rect x="28" y="66" width="44" height="8" rx="2" fill="#A8502E"/>
@@ -449,22 +449,22 @@ function headerHTML() {
   ).join("");
   return `
   <header style="background:#1F3D2A" class="sticky top-0 z-30 shadow-md">
-    <div class="max-w-6xl mx-auto flex items-center justify-between px-5 py-4">
-      <div class="flex items-center gap-2">
-        ${nurseryLogoSvg(52)}
-        <div class="flex flex-col items-start">
-          <span class="agf-display text-lg md:text-xl font-bold" style="color:#FBF7EE;padding:6px 14px;border-radius:8px;background:linear-gradient(135deg,#3D6B2E,#52803B);border:1px solid #7DAE5C;letter-spacing:0.03em;box-shadow:0 2px 8px rgba(0,0,0,0.25)">Andhra Green Flora Nursery</span>
-          <span class="agf-hand text-sm mt-1 pl-1" style="color:#E2932B">by ${escapeAttr(NURSERY.ownerName)}</span>
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-2 px-3 sm:px-5 py-3 sm:py-4">
+      <div class="flex items-center gap-2 min-w-0">
+        <div style="width:clamp(32px,9vw,52px);height:clamp(32px,9vw,52px);flex-shrink:0">${nurseryLogoSvg()}</div>
+        <div class="flex flex-col items-start min-w-0">
+          <span class="agf-display font-bold" style="color:#FBF7EE;font-size:clamp(0.8rem,3vw,1.25rem);padding:clamp(3px,1vw,6px) clamp(7px,2.5vw,14px);border-radius:8px;background:linear-gradient(135deg,#3D6B2E,#52803B);border:1px solid #7DAE5C;letter-spacing:0.02em;box-shadow:0 2px 8px rgba(0,0,0,0.25);line-height:1.2">Andhra Green Flora Nursery</span>
+          <span class="agf-hand mt-1 pl-1" style="color:#E2932B;font-size:clamp(0.7rem,2.5vw,0.95rem);white-space:nowrap">by ${escapeAttr(NURSERY.ownerName)}</span>
         </div>
       </div>
       <nav class="hidden md:flex items-center gap-6 agf-display text-sm">${navBtns}</nav>
-      <button onclick="openDrawer()" class="agf-btn relative flex items-center gap-2 px-3 py-2 rounded" style="background:#E2932B;color:#1F3D2A">
+      <button onclick="openDrawer()" class="agf-btn relative flex items-center gap-2 px-3 py-2 rounded flex-shrink-0" style="background:#E2932B;color:#1F3D2A">
         ${basketIcon(18)}
         <span class="hidden sm:inline">List</span>
         ${cCount > 0 ? `<span class="absolute -top-2 -right-2 rounded-full text-xs w-5 h-5 flex items-center justify-center" style="background:#A8502E;color:#FBF7EE">${cCount}</span>` : ""}
       </button>
     </div>
-    <div class="max-w-6xl mx-auto px-5 pb-3 flex justify-end">
+    <div class="max-w-6xl mx-auto px-3 sm:px-5 pb-3 flex justify-end">
       <a href="https://wa.me/${NURSERY.phoneRaw}" target="_blank" rel="noreferrer" class="agf-display flex items-center gap-1.5 text-xs" style="color:#C9D5C0">
         ${whatsAppIcon(13)} ${escapeAttr(NURSERY.phone)}
       </a>
