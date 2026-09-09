@@ -321,7 +321,6 @@ const state = {
   view: "shop",
   activeCat: "all",
   query: "",
-  orderNo: null,
   form: { name: "", phone: "" },
   customProducts: loadCustomProducts(),
   addOpen: false,
@@ -384,9 +383,8 @@ window.setFormPhone = function (v) { state.form.phone = v; };
 window.submitCheckout = function (e) {
   e.preventDefault();
   if (!state.form.name || !state.form.phone) return false;
-  state.orderNo = "AGF" + Math.floor(1000 + Math.random() * 9000);
-  state.view = "confirmed";
-  render();
+  if (cartItemsList().length === 0) return false;
+  window.open(whatsappHref(cartWhatsAppText()), "_blank");
   return false;
 };
 window.startOver = function () {
@@ -559,7 +557,7 @@ function checkoutViewHTML() {
   <main class="max-w-xl mx-auto px-5 py-10">
     <button onclick="setView('shop')" class="agf-display flex items-center gap-1 text-sm mb-6" style="color:#1F3D2A">${arrowLeftIcon(16)} Back to shop</button>
     <h2 class="agf-display font-bold text-2xl mb-1" style="color:#1F3D2A">Send your plant list</h2>
-    <p class="text-sm mb-6" style="color:#6B5D48">We're online-only — no showroom to visit. Leave your name and number and we'll call or WhatsApp you back with pricing, stock, and delivery details.</p>
+    <p class="text-sm mb-6" style="color:#6B5D48">We're online-only — no showroom to visit. Fill in your name and number below, then send your list straight to us on WhatsApp for pricing, stock, and delivery details.</p>
     <form onsubmit="return submitCheckout(event)" class="space-y-4">
       <div>
         <label class="text-xs agf-display font-bold" style="color:#1F3D2A">Full name</label>
@@ -573,23 +571,8 @@ function checkoutViewHTML() {
         <p class="agf-display font-bold text-sm mb-2" style="color:#1F3D2A">Your list</p>
         ${itemsHTML}
       </div>
-      <button type="submit" ${items.length === 0 ? "disabled" : ""} class="agf-btn w-full py-3 rounded-lg text-sm mt-2" style="background:${items.length === 0 ? "#B5A481" : "#A8502E"};color:#FBF7EE">Send inquiry</button>
-      <a href="${whatsappHref(cartWhatsAppText())}" target="_blank" rel="noreferrer" class="agf-btn w-full py-3 rounded-lg text-sm flex items-center justify-center gap-2" style="background:#1F3D2A;color:#FBF7EE">${whatsAppIcon(16)} Or send this list on WhatsApp</a>
+      <button type="submit" ${items.length === 0 ? "disabled" : ""} class="agf-btn w-full py-3 rounded-lg text-sm mt-2 flex items-center justify-center gap-2" style="background:${items.length === 0 ? "#B5A481" : "#1F3D2A"};color:#FBF7EE">${whatsAppIcon(16)} Send list on WhatsApp</button>
     </form>
-  </main>`;
-}
-
-function confirmedViewHTML() {
-  const items = cartItemsList();
-  const itemsHTML = items.map((i) => `<div class="flex justify-between text-sm py-1"><span>${escapeAttr(i.name)}</span><span>× ${i.qty}</span></div>`).join("");
-  const firstName = (state.form.name || "").split(" ")[0] || "";
-  return `
-  <main class="max-w-xl mx-auto px-5 py-16 text-center">
-    <div class="stamp">INQUIRY SENT</div>
-    <h2 class="agf-display font-bold text-2xl mt-6" style="color:#1F3D2A">Thank you, ${escapeAttr(firstName)}!</h2>
-    <p class="mt-2 text-sm" style="color:#6B5D48">Reference <span class="agf-display font-bold">${escapeAttr(state.orderNo || "")}</span>. We'll call ${escapeAttr(state.form.phone)} shortly to confirm pricing, stock, and delivery.</p>
-    <div class="rounded-lg p-4 mt-6 text-left" style="background:#FBF7EE;border:2px solid #B5A481">${itemsHTML}</div>
-    <button onclick="startOver()" class="agf-btn mt-8 px-5 py-2.5 rounded" style="background:#52803B;color:#FBF7EE">Continue browsing</button>
   </main>`;
 }
 
@@ -707,7 +690,6 @@ function render() {
   let mainHTML = "";
   if (state.view === "shop") mainHTML = shopViewHTML();
   else if (state.view === "checkout") mainHTML = checkoutViewHTML();
-  else if (state.view === "confirmed") mainHTML = confirmedViewHTML();
 
   document.getElementById("root").innerHTML = `
     <div style="font-family:'Work Sans', sans-serif;background:#E8DCC3;min-height:100vh;color:#2B2118">
