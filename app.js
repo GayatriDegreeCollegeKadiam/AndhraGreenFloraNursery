@@ -7,6 +7,7 @@
 
 const NURSERY = {
   name: "Andhra Green Flora Nursery",
+  ownerName: "Ramesh Gudla",
   phone: "+91 75691 65497",
   phoneRaw: "917569165497",
   whatsappNote: "Tell us the plant names and quantities. We will confirm stock and delivery.",
@@ -28,6 +29,24 @@ function iconSvg(pathD, opts = {}) {
 }
 const leafIcon = (size = 18, color = "currentColor") =>
   iconSvg("M11 20A7 7 0 0 1 4 13c0-5 4-9 9-9 5 0 8 3 8 8a7 7 0 0 1-7 7c-1.5 0-3-.5-4-1.5M4 13c4 0 8-4 9-9", { size, color });
+
+/* ---------- brand logo: potted sapling with a marigold bud (growth, care) ---------- */
+function nurseryLogoSvg(size = 44) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="48" fill="#FBF7EE" stroke="#7DAE5C" stroke-width="2"/>
+    <path d="M30,72 L70,72 L64,90 L36,90 Z" fill="#A8502E"/>
+    <rect x="28" y="66" width="44" height="8" rx="2" fill="#A8502E"/>
+    <rect x="47" y="46" width="6" height="24" fill="#4A6B36"/>
+    <path d="M50,52 C34,52 26,40 28,26 C40,28 50,38 50,52Z" fill="#3D6B2E"/>
+    <path d="M50,52 C66,52 74,40 72,26 C60,28 50,38 50,52Z" fill="#52803B"/>
+    <path d="M50,48 C40,44 36,32 40,20 C48,26 52,36 50,48Z" fill="#4C7A3D"/>
+    <circle cx="50" cy="18" r="9" fill="#E2932B"/>
+    <circle cx="50" cy="18" r="4" fill="#F4C15C"/>
+    <ellipse cx="20" cy="82" rx="10" ry="3.5" fill="#52803B" opacity="0.5"/>
+    <ellipse cx="80" cy="82" rx="10" ry="3.5" fill="#52803B" opacity="0.5"/>
+  </svg>`;
+}
+
 const basketIcon = (size = 18, color = "currentColor") =>
   iconSvg(null, { size, color, extra: `<path d="M5 9h14l-1.4 9.2A2 2 0 0 1 15.6 20H8.4a2 2 0 0 1-2-1.8L5 9Z"/><path d="M8 9V7a4 4 0 0 1 8 0v2"/>` });
 const plusIcon = (size = 18, color = "currentColor") => iconSvg("M12 5v14M5 12h14", { size, color });
@@ -55,7 +74,7 @@ const whatsAppIcon = (size = 18, color = "currentColor") =>
 const CATEGORIES = [
   { id: "fruit", label: "Fruit Plants", iconFn: treeIcon, tint: "#A8502E" },
   { id: "flower", label: "Flowering Plants", iconFn: flowerIcon, tint: "#E2932B" },
-  { id: "decor", label: "Decorative Plants", iconFn: sproutIcon, tint: "#52803B" },
+  { id: "decor", label: "Indoor & Ornamental Plants", iconFn: sproutIcon, tint: "#52803B" },
 ];
 
 /* ---------- illustrated plant art (SVG strings) ---------- */
@@ -432,8 +451,11 @@ function headerHTML() {
   <header style="background:#1F3D2A" class="sticky top-0 z-30 shadow-md">
     <div class="max-w-6xl mx-auto flex items-center justify-between px-5 py-4">
       <div class="flex items-center gap-2">
-        ${leafIcon(26, "#E2932B")}
-        <span class="agf-display text-lg md:text-xl" style="color:#FBF7EE">Andhra Green Flora Nursery</span>
+        ${nurseryLogoSvg(52)}
+        <div class="flex flex-col items-start">
+          <span class="agf-display text-lg md:text-xl font-bold" style="color:#FBF7EE;padding:6px 14px;border-radius:8px;background:linear-gradient(135deg,#3D6B2E,#52803B);border:1px solid #7DAE5C;letter-spacing:0.03em;box-shadow:0 2px 8px rgba(0,0,0,0.25)">Andhra Green Flora Nursery</span>
+          <span class="agf-hand text-sm mt-1 pl-1" style="color:#E2932B">by ${escapeAttr(NURSERY.ownerName)}</span>
+        </div>
       </div>
       <nav class="hidden md:flex items-center gap-6 agf-display text-sm">${navBtns}</nav>
       <button onclick="openDrawer()" class="agf-btn relative flex items-center gap-2 px-3 py-2 rounded" style="background:#E2932B;color:#1F3D2A">
@@ -462,12 +484,15 @@ function shopViewHTML() {
   return `
   <main class="max-w-6xl mx-auto px-5 pb-24">
     <section class="pt-10 pb-8 text-center">
-      <p class="agf-hand text-2xl" style="color:#A8502E">— healthy plants, delivered across All over India —</p>
+      <p class="agf-hand text-2xl" style="color:#A8502E">— Healthy plants, delivered across All over India —</p>
       <h1 class="agf-display font-bold leading-tight" style="font-size:clamp(2rem, 5vw, 3.2rem);color:#1F3D2A">
-        Fruit, flower &amp; decor plants,<br /> grown healthy in India.
+        Fruit, Flower, Indoor & Ornamental Plants,<br /> Grown Healthy In India.
       </h1>
       <p class="max-w-xl mx-auto mt-4 text-sm" style="color:#6B5D48">
-        An online-only nursery — no storefront to visit. Browse our stock, build a list of what you'd like, and send it to us. We'll confirm pricing, availability, and delivery over WhatsApp or a phone call.
+        An online-only nursery — no storefront to visit. Browse our stock, build a list of what you'd like, and send it to us. We'll confirm pricing, availability, and delivery over WhatsApp or a phone call. <br> For any other plants not listed below please contact us via what's app for enquiries...
+      </p>
+      <p class="agf-display font-bold text-xs mt-5" style="color:#FBF7EE;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#52803B,#1F3D2A);padding:8px 20px;border-radius:999px;letter-spacing:0.04em;box-shadow:0 4px 10px rgba(31,61,42,0.35);border:1px solid #7DAE5C">
+        📦 BULK ORDERS WELCOME
       </p>
       <div class="max-w-md mx-auto mt-6 relative">
         <span class="absolute left-3 top-1/2 -translate-y-1/2" style="color:#6B5D48">${searchIcon(16)}</span>
@@ -494,7 +519,6 @@ function gridHTML() {
   const cards = filtered
     .map((p, idx) => {
       const cat = CATEGORIES.find((c) => c.id === p.cat) || { tint: "#52803B" };
-      const rot = TAG_ROTATIONS[idx % TAG_ROTATIONS.length];
       const qty = state.cart[p.id] || 0;
       const qtyControls =
         qty === 0
@@ -505,7 +529,7 @@ function gridHTML() {
                <button onclick="addToCart('${p.id}')" class="p-1.5" style="color:#52803B">${plusIcon(14)}</button>
              </div>`;
       return `
-      <div class="agf-tag pt-1 pb-4 px-3" style="transform:rotate(${rot})">
+      <div class="agf-tag pt-1 pb-4 px-3">
         <div class="agf-string"></div>
         <div class="agf-hole"></div>
         <div class="mt-2 rounded-md overflow-hidden flex items-center justify-center" style="height:190px;background:${cat.tint}14">

@@ -15,14 +15,16 @@ body {
 .agf-tag {
   position: relative;
   background: #FBF7EE;
-  border-radius: 3px;
-  box-shadow: 0 6px 14px rgba(43, 33, 24, 0.18);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  border-radius: 12px;
+  border: 1.5px solid #D8C7A0;
+  box-shadow: 0 4px 12px rgba(43, 33, 24, 0.12), 0 1px 3px rgba(43, 33, 24, 0.08);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
 .agf-tag:hover {
-  transform: translateY(-4px) rotate(0deg) !important;
-  box-shadow: 0 14px 22px rgba(43, 33, 24, 0.24);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 28px rgba(43, 33, 24, 0.2), 0 4px 8px rgba(43, 33, 24, 0.12);
+  border-color: #A8502E;
 }
 
 .agf-hole {
